@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.ui.specs
 
-import uk.gov.hmrc.ui.pages.{Auth, Exclusions}
+import uk.gov.hmrc.ui.pages.Exclusions
 
 class ExclusionsSpec extends BaseSpec {
 
