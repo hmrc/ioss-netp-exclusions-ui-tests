@@ -30,7 +30,7 @@ object Exclusions extends BasePage {
   private val exclusionsUrl: String =
     TestEnvironment.url("ioss-netp-exclusions-frontend")
 
-  private val journeyUrl: String = "/pay-clients-vat-on-eu-sales/leave-new-ioss-client"
+  private val journeyUrl: String = "/pay-clients-vat-on-eu-sales/leave-import-one-stop-shop-netp"
 
   def goToExclusionsJourney(): Unit =
     get(exclusionsUrl + journeyUrl)
