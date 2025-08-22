@@ -16,18 +16,67 @@
 
 package uk.gov.hmrc.ui.specs
 
-import uk.gov.hmrc.ui.pages.Exclusions
+import uk.gov.hmrc.ui.pages.{Auth, Exclusions}
 
 class ExclusionsSpec extends BaseSpec {
 
   private val exclusions = Exclusions
+  private val auth       = Auth
 
   Feature("Exclusions journeys") {
 
-    Scenario("Intermediary leaves the IOSS NETP service due to moving country") {
+    Scenario(
+      "Intermediary leaves the IOSS NETP service on behalf of a client who is no longer making eligible sales "
+    ) {
 
       Given("the intermediary accesses the IOSS NETP Exclusions Service")
-      exclusions.goToExclusionsJourney()
+      auth.goToAuthorityWizard()
+      auth.loginUsingAuthorityWizard(true, true, "standard")
+
+      When("the intermediary answers yes on the exclusions-stopped-selling-goods page")
+      exclusions.checkJourneyUrl("exclusions-stopped-selling-goods")
+      exclusions.answerRadioButton("yes")
+
+      And("the intermediary enters today on the exclusions-stopped-selling-goods-date page")
+      exclusions.checkJourneyUrl("exclusions-stopped-selling-goods-date")
+      exclusions.enterDate("today")
+
+      When("the intermediary submits their exclusion")
+      exclusions.checkJourneyUrl("check-your-answers")
+      exclusions.submitExclusion()
+
+      Then("the intermediary is on the client-exclusions-request-received page")
+      exclusions.checkJourneyUrl("client-exclusions-request-received")
+
+    }
+
+    Scenario(
+      "Intermediary leaves the IOSS NETP service on behalf of a client voluntarily"
+    ) {
+
+      Given("the intermediary accesses the IOSS NETP Exclusions Service")
+      auth.goToAuthorityWizard()
+      auth.loginUsingAuthorityWizard(true, true, "standard")
+
+      When("the intermediary answers no on the exclusions-stopped-selling-goods page")
+      exclusions.checkJourneyUrl("exclusions-stopped-selling-goods")
+      exclusions.answerRadioButton("no")
+
+      And("the intermediary answers yes on the exclusions-leave-scheme page")
+      exclusions.checkJourneyUrl("exclusions-leave-scheme")
+      exclusions.answerRadioButton("yes")
+
+      And("the intermediary enters today on the exclusions-stopped-using-service-date page")
+      exclusions.checkJourneyUrl("exclusions-stopped-using-service-date")
+      exclusions.enterDate("today")
+
+      When("the intermediary submits their exclusion")
+      exclusions.checkJourneyUrl("check-your-answers")
+      exclusions.submitExclusion()
+
+      Then("the intermediary is on the client-exclusions-request-received page")
+      exclusions.checkJourneyUrl("client-exclusions-request-received")
+
     }
   }
 }
