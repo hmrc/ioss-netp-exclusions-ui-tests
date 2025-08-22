@@ -34,7 +34,7 @@ object Auth extends BasePage {
 
     getCurrentUrl should startWith(authUrl)
 
-    sendKeys(By.name("redirectionUrl"), s"$exclusionsUrl$journeyUrl")
+    sendKeys(By.name("redirectionUrl"), s"$exclusionsUrl$journeyUrl/start-journey/IM9001234567")
 
     selectByValue(By.id("affinityGroupSelect"), "Organisation")
 
