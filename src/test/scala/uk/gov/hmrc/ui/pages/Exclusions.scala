@@ -35,4 +35,43 @@ object Exclusions extends BasePage {
   def goToExclusionsJourney(): Unit =
     get(exclusionsUrl + journeyUrl)
 
+  def checkJourneyUrl(page: String): Unit =
+    getCurrentUrl should startWith(s"$exclusionsUrl$journeyUrl/$page")
+
+  def answerRadioButton(answer: String): Unit = {
+
+    answer match {
+      case "yes" => click(By.id("value"))
+      case "no"  => click(By.id("value-no"))
+      case _     => throw new Exception("Option doesn't exist")
+    }
+    click(continueButton)
+  }
+
+  def enterDate(day: String): Unit = {
+
+    val date =
+      if (day == "today") {
+        LocalDate.now()
+      } else if (day == "mid-month") {
+        LocalDate.now().withDayOfMonth(15)
+      } else {
+        LocalDate.now().plusDays(1)
+      }
+
+    sendKeys(By.id("value.day"), date.getDayOfMonth.toString)
+    sendKeys(By.id("value.month"), date.getMonthValue.toString)
+    sendKeys(By.id("value.year"), date.getYear.toString)
+
+    click(continueButton)
+  }
+
+  def submitExclusion(): Unit =
+    click(submitButton)
+
+  def checkProblemPage(): Unit = {
+    val h1 = Driver.instance.findElement(By.tagName("h1")).getText
+    Assert.assertTrue(h1.equals("Sorry, there is a problem with the service"))
+  }
+
 }
