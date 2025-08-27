@@ -17,9 +17,8 @@
 package uk.gov.hmrc.ui.pages
 
 import uk.gov.hmrc.configuration.TestEnvironment
-import org.openqa.selenium.{By, Keys}
+import org.openqa.selenium.By
 import org.scalatest.matchers.should.Matchers.*
-import org.openqa.selenium.support.ui.{ExpectedConditions, FluentWait}
 import uk.gov.hmrc.selenium.webdriver.Driver
 import org.junit.Assert
 
@@ -55,6 +54,8 @@ object Exclusions extends BasePage {
         LocalDate.now()
       } else if (day == "mid-month") {
         LocalDate.now().withDayOfMonth(15)
+      } else if (day == "yesterday") {
+        LocalDate.now().minusDays(1)
       } else {
         LocalDate.now().plusDays(1)
       }
@@ -73,5 +74,8 @@ object Exclusions extends BasePage {
     val h1 = Driver.instance.findElement(By.tagName("h1")).getText
     Assert.assertTrue(h1.equals("Sorry, there is a problem with the service"))
   }
+
+  def selectChangeLink(link: String): Unit =
+    click(By.cssSelector(s"a[href*=$link]"))
 
 }
