@@ -26,7 +26,7 @@ class ExclusionsSpec extends BaseSpec {
   Feature("Exclusions journeys") {
 
     Scenario(
-      "Intermediary leaves the IOSS NETP service on behalf of a client who is no longer making eligible sales "
+      "Intermediary leaves the IOSS NETP service on behalf of a client who is no longer making eligible sales"
     ) {
 
       Given("the intermediary accesses the IOSS NETP Exclusions Service")
