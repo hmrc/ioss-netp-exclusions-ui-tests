@@ -32,11 +32,15 @@ object Auth extends BasePage {
     get(authUrl)
     fluentWait.until(ExpectedConditions.urlContains(authUrl))
 
-  def loginUsingAuthorityWizard(withIntEnrolment: Boolean, withVatEnrolment: Boolean, vrnType: String): Unit = {
+  def loginUsingAuthorityWizard(withIntEnrolment: Boolean, withVatEnrolment: Boolean, accountType: String): Unit = {
 
     getCurrentUrl should startWith(authUrl)
 
-    sendKeys(By.name("redirectionUrl"), s"$exclusionsUrl$journeyUrl/start-journey/IM9001234567")
+    if (accountType == "failure") {
+      sendKeys(By.name("redirectionUrl"), s"$exclusionsUrl$journeyUrl/start-journey/IM9002222222")
+    } else {
+      sendKeys(By.name("redirectionUrl"), s"$exclusionsUrl$journeyUrl/start-journey/IM9001144771")
+    }
 
     selectByValue(By.id("affinityGroupSelect"), "Organisation")
 
