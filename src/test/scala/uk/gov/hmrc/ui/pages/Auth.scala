@@ -56,6 +56,8 @@ object Auth extends BasePage {
       sendKeys(By.id("input-1-0-name"), "IntNumber")
       if (accountType == "wrongClient" | accountType == "alreadyExcludedClient") {
         sendKeys(By.id("input-1-0-value"), "IN9008888886")
+      } else if (accountType == "failure") {
+        sendKeys(By.id("input-1-0-value"), "IN900666001")
       } else {
         sendKeys(By.id("input-1-0-value"), "IN9001234567")
       }
