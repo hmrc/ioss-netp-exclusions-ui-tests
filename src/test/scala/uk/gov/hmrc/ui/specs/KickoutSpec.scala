@@ -104,5 +104,35 @@ class KickoutSpec extends BaseSpec {
       exclusions.checkJourneyUrl("submission-failure")
 
     }
+
+    Scenario(
+      "Intermediary cannot access exclusions journey for a NETP who is not one of their clients"
+    ) {
+
+      Given("the intermediary signs in")
+      auth.goToAuthorityWizard()
+
+      When("the intermediary attempts to access the IOSS NETP Exclusions Service for a NETP who is not their client")
+      auth.loginUsingAuthorityWizard(true, true, "wrongClient")
+
+      Then("the intermediary is on the cannot-use-client-excluded-or-not-client page")
+      exclusions.checkJourneyUrl("cannot-use-client-excluded-or-not-client")
+    }
+
+    Scenario(
+      "Intermediary cannot access exclusions journey for one of their clients who is already excluded"
+    ) {
+
+      Given("the intermediary signs in")
+      auth.goToAuthorityWizard()
+
+      When(
+        "the intermediary attempts to access the IOSS NETP Exclusions Service for one of their clients who is already excluded"
+      )
+      auth.loginUsingAuthorityWizard(true, true, "alreadyExcludedClient")
+
+      Then("the intermediary is on the cannot-use-client-excluded-or-not-client page")
+      exclusions.checkJourneyUrl("cannot-use-client-excluded-or-not-client")
+    }
   }
 }

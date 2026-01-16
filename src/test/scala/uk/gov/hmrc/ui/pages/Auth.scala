@@ -38,6 +38,8 @@ object Auth extends BasePage {
 
     if (accountType == "failure") {
       sendKeys(By.name("redirectionUrl"), s"$exclusionsUrl$journeyUrl/start-journey/IM9002222222")
+    } else if (accountType == "alreadyExcludedClient") {
+      sendKeys(By.name("redirectionUrl"), s"$exclusionsUrl$journeyUrl/start-journey/IM9001144884")
     } else {
       sendKeys(By.name("redirectionUrl"), s"$exclusionsUrl$journeyUrl/start-journey/IM9001144771")
     }
@@ -52,7 +54,11 @@ object Auth extends BasePage {
     if (withIntEnrolment) {
       sendKeys(By.id("enrolment[1].name"), "HMRC-IOSS-INT")
       sendKeys(By.id("input-1-0-name"), "IntNumber")
-      sendKeys(By.id("input-1-0-value"), "IN9001234567")
+      if (accountType == "wrongClient" | accountType == "alreadyExcludedClient") {
+        sendKeys(By.id("input-1-0-value"), "IN9008888886")
+      } else {
+        sendKeys(By.id("input-1-0-value"), "IN9001234567")
+      }
     }
 
     click(By.cssSelector("Input[value='Submit']"))
