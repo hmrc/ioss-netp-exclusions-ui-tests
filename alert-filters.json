@@ -1,0 +1,12 @@
+{
+  "add":[
+    {
+      "reason": "No content, this is a redirect only",
+      "contextId":1,
+      "url":"http://localhost:10176/pay-clients-vat-on-eu-sales/leave-import-one-stop-shop-netp/start-journey/.*",
+      "ruleId":10038,
+      "urlIsRegex": "true",
+      "newLevel":-1
+    }
+  ]
+}
