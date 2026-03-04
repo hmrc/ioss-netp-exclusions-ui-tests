@@ -35,7 +35,7 @@ class ChangeAnswersSpec extends BaseSpec {
 
       When("the intermediary answers yes on the exclusions-stopped-selling-goods page")
       exclusions.checkJourneyUrl("exclusions-stopped-selling-goods")
-      exclusions.answerRadioButton("yes")
+      exclusions.stoppedEligibleSales("Yes")
 
       And("the intermediary enters today on the exclusions-stopped-selling-goods-date page")
       exclusions.checkJourneyUrl("exclusions-stopped-selling-goods-date")
@@ -68,7 +68,7 @@ class ChangeAnswersSpec extends BaseSpec {
 
       When("the intermediary answers yes on the exclusions-stopped-selling-goods page")
       exclusions.checkJourneyUrl("exclusions-stopped-selling-goods")
-      exclusions.answerRadioButton("yes")
+      exclusions.stoppedEligibleSales("Yes")
 
       And("the intermediary enters today on the exclusions-stopped-selling-goods-date page")
       exclusions.checkJourneyUrl("exclusions-stopped-selling-goods-date")
@@ -80,7 +80,48 @@ class ChangeAnswersSpec extends BaseSpec {
 
       When("the intermediary answers no on the exclusions-stopped-selling-goods page")
       exclusions.checkJourneyUrl("exclusions-stopped-selling-goods?waypoints=check-your-answers")
-      exclusions.answerRadioButton("no")
+      exclusions.stoppedEligibleSales("No")
+
+      And("the intermediary answers yes on the exclusions-leave-scheme page")
+      exclusions.checkJourneyUrl("exclusions-leave-scheme?waypoints=check-your-answers")
+      exclusions.answerRadioButton("yes")
+
+      And("the intermediary enters today on the exclusions-stopped-using-service-date page")
+      exclusions.checkJourneyUrl("exclusions-stopped-using-service-date?waypoints=check-your-answers")
+      exclusions.enterDate("today")
+
+      And("the intermediary submits their exclusion")
+      exclusions.checkJourneyUrl("check-your-answers")
+      exclusions.submitExclusion()
+
+      Then("the intermediary is on the client-exclusions-request-received page")
+      exclusions.checkJourneyUrl("client-exclusions-request-received")
+
+    }
+
+    Scenario(
+      "Intermediary changes from client no longer making eligible sales journey to 'don't know' journey"
+    ) {
+
+      Given("the intermediary accesses the IOSS NETP Exclusions Service")
+      auth.goToAuthorityWizard()
+      auth.loginUsingAuthorityWizard(true, true, "standard")
+
+      When("the intermediary answers yes on the exclusions-stopped-selling-goods page")
+      exclusions.checkJourneyUrl("exclusions-stopped-selling-goods")
+      exclusions.stoppedEligibleSales("Yes")
+
+      And("the intermediary enters today on the exclusions-stopped-selling-goods-date page")
+      exclusions.checkJourneyUrl("exclusions-stopped-selling-goods-date")
+      exclusions.enterDate("today")
+
+      And("the trader clicks change on the check-your-answers page for exclusions-stopped-selling-goods")
+      exclusions.checkJourneyUrl("check-your-answers")
+      exclusions.selectChangeLink("exclusions-stopped-selling-goods\\?waypoints\\=check-your-answers")
+
+      When("the intermediary answers no on the exclusions-stopped-selling-goods page")
+      exclusions.checkJourneyUrl("exclusions-stopped-selling-goods?waypoints=check-your-answers")
+      exclusions.stoppedEligibleSales("Don't know")
 
       And("the intermediary answers yes on the exclusions-leave-scheme page")
       exclusions.checkJourneyUrl("exclusions-leave-scheme?waypoints=check-your-answers")
@@ -109,7 +150,7 @@ class ChangeAnswersSpec extends BaseSpec {
 
       When("the intermediary answers no on the exclusions-stopped-selling-goods page")
       exclusions.checkJourneyUrl("exclusions-stopped-selling-goods")
-      exclusions.answerRadioButton("no")
+      exclusions.stoppedEligibleSales("No")
 
       And("the intermediary answers yes on the exclusions-leave-scheme page")
       exclusions.checkJourneyUrl("exclusions-leave-scheme")
@@ -146,7 +187,7 @@ class ChangeAnswersSpec extends BaseSpec {
 
       When("the intermediary answers no on the exclusions-stopped-selling-goods page")
       exclusions.checkJourneyUrl("exclusions-stopped-selling-goods")
-      exclusions.answerRadioButton("no")
+      exclusions.stoppedEligibleSales("No")
 
       And("the intermediary answers yes on the exclusions-leave-scheme page")
       exclusions.checkJourneyUrl("exclusions-leave-scheme")
@@ -162,7 +203,7 @@ class ChangeAnswersSpec extends BaseSpec {
 
       When("the intermediary answers yes on the exclusions-stopped-selling-goods page")
       exclusions.checkJourneyUrl("exclusions-stopped-selling-goods?waypoints=check-your-answers")
-      exclusions.answerRadioButton("yes")
+      exclusions.stoppedEligibleSales("Yes")
 
       And("the intermediary enters today on the exclusions-stopped-selling-goods-date page")
       exclusions.checkJourneyUrl("exclusions-stopped-selling-goods-date?waypoints=check-your-answers")

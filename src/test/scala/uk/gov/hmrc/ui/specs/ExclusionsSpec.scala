@@ -35,7 +35,7 @@ class ExclusionsSpec extends BaseSpec {
 
       When("the intermediary answers yes on the exclusions-stopped-selling-goods page")
       exclusions.checkJourneyUrl("exclusions-stopped-selling-goods")
-      exclusions.answerRadioButton("yes")
+      exclusions.stoppedEligibleSales("Yes")
 
       And("the intermediary enters today on the exclusions-stopped-selling-goods-date page")
       exclusions.checkJourneyUrl("exclusions-stopped-selling-goods-date")
@@ -60,7 +60,36 @@ class ExclusionsSpec extends BaseSpec {
 
       When("the intermediary answers no on the exclusions-stopped-selling-goods page")
       exclusions.checkJourneyUrl("exclusions-stopped-selling-goods")
-      exclusions.answerRadioButton("no")
+      exclusions.stoppedEligibleSales("No")
+
+      And("the intermediary answers yes on the exclusions-leave-scheme page")
+      exclusions.checkJourneyUrl("exclusions-leave-scheme")
+      exclusions.answerRadioButton("yes")
+
+      And("the intermediary enters today on the exclusions-stopped-using-service-date page")
+      exclusions.checkJourneyUrl("exclusions-stopped-using-service-date")
+      exclusions.enterDate("today")
+
+      When("the intermediary submits their exclusion")
+      exclusions.checkJourneyUrl("check-your-answers")
+      exclusions.submitExclusion()
+
+      Then("the intermediary is on the client-exclusions-request-received page")
+      exclusions.checkJourneyUrl("client-exclusions-request-received")
+
+    }
+
+    Scenario(
+      "Intermediary leaves the IOSS NETP service on behalf of a client without knowing if they are stopping eligible sales"
+    ) {
+
+      Given("the intermediary accesses the IOSS NETP Exclusions Service")
+      auth.goToAuthorityWizard()
+      auth.loginUsingAuthorityWizard(true, true, "standard")
+
+      When("the intermediary answers no on the exclusions-stopped-selling-goods page")
+      exclusions.checkJourneyUrl("exclusions-stopped-selling-goods")
+      exclusions.stoppedEligibleSales("Don't know")
 
       And("the intermediary answers yes on the exclusions-leave-scheme page")
       exclusions.checkJourneyUrl("exclusions-leave-scheme")
