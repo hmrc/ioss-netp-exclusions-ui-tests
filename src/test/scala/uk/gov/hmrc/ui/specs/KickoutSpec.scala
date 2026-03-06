@@ -61,7 +61,7 @@ class KickoutSpec extends BaseSpec {
 
       When("the intermediary answers yes on the exclusions-stopped-selling-goods page")
       exclusions.checkJourneyUrl("exclusions-stopped-selling-goods")
-      exclusions.answerRadioButton("yes")
+      exclusions.stoppedEligibleSales("Yes")
 
       And("the intermediary enters today on the exclusions-stopped-selling-goods-date page")
       exclusions.checkJourneyUrl("exclusions-stopped-selling-goods-date")
@@ -86,7 +86,7 @@ class KickoutSpec extends BaseSpec {
 
       When("the intermediary answers no on the exclusions-stopped-selling-goods page")
       exclusions.checkJourneyUrl("exclusions-stopped-selling-goods")
-      exclusions.answerRadioButton("no")
+      exclusions.stoppedEligibleSales("No")
 
       And("the intermediary answers yes on the exclusions-leave-scheme page")
       exclusions.checkJourneyUrl("exclusions-leave-scheme")

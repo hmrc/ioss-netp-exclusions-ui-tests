@@ -82,4 +82,15 @@ object Exclusions extends BasePage {
   def selectChangeLink(link: String): Unit =
     click(By.cssSelector(s"a[href*=$link]"))
 
+  def stoppedEligibleSales(answer: String): Unit = {
+
+    answer match {
+      case "Yes"        => click(By.id("value_0"))
+      case "No"         => click(By.id("value_1"))
+      case "Don't know" => click(By.id("value_2"))
+      case _            => throw new Exception("Option doesn't exist")
+    }
+    click(continueButton)
+  }
+
 }
